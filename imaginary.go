@@ -41,13 +41,21 @@ var (
 	aAuthorization     = flag.String("authorization", "", "Defines a constant Authorization header value passed to all the image source servers. -enable-url-source flag must be defined. This overwrites authorization headers forwarding behavior via X-Forward-Authorization")
 	aPlaceholder       = flag.String("placeholder", "", "Image path to image custom placeholder to be used in case of error. Recommended minimum image size is: 1200x1200")
 	aDisableEndpoints  = flag.String("disable-endpoints", "", "Comma separated endpoints to disable. E.g: form,crop,rotate,health")
-	aHTTPCacheTTL      = flag.Int("http-cache-ttl", -1, "The TTL in seconds")
-	aReadTimeout       = flag.Int("http-read-timeout", 60, "HTTP read timeout in seconds")
-	aWriteTimeout      = flag.Int("http-write-timeout", 60, "HTTP write timeout in seconds")
-	aConcurrency       = flag.Int("concurrency", 0, "Throttle concurrency limit per second")
-	aBurst             = flag.Int("burst", 100, "Throttle burst max cache size")
-	aMRelease          = flag.Int("mrelease", 30, "OS memory release interval in seconds")
-	aCpus              = flag.Int("cpus", runtime.GOMAXPROCS(-1), "Number of cpu cores to use")
+
+	aEnableS3    = flag.Bool("enable-s3", false, "Enable S3 bucket.")
+	aS3AccessKey = flag.String("s3key", "", "S3 AccessKey")
+	aS3Secret    = flag.String("s3secret", "", "S3Secret")
+	aS3Bucket    = flag.String("s3bucket", "", "S3Bucket")
+	aS3Region    = flag.String("s3region", "", "S3Region")
+	aS3Path      = flag.String("s3path", "", "S3Path")
+
+	aHTTPCacheTTL = flag.Int("http-cache-ttl", -1, "The TTL in seconds")
+	aReadTimeout  = flag.Int("http-read-timeout", 60, "HTTP read timeout in seconds")
+	aWriteTimeout = flag.Int("http-write-timeout", 60, "HTTP write timeout in seconds")
+	aConcurrency  = flag.Int("concurrency", 0, "Throttle concurrency limit per second")
+	aBurst        = flag.Int("burst", 100, "Throttle burst max cache size")
+	aMRelease     = flag.Int("mrelease", 30, "OS memory release interval in seconds")
+	aCpus         = flag.Int("cpus", runtime.GOMAXPROCS(-1), "Number of cpu cores to use")
 )
 
 const usage = `imaginary %s
@@ -135,6 +143,12 @@ func main() {
 		Authorization:     *aAuthorization,
 		AlloweOrigins:     parseOrigins(*aAlloweOrigins),
 		MaxAllowedSize:    *aMaxAllowedSize,
+		EnableS3:          *aEnableS3,
+		S3AccessKey:       *aS3AccessKey,
+		S3Secret:          *aS3Secret,
+		S3Bucket:          *aS3Bucket,
+		S3Path:            *aS3Path,
+		S3Region:          *aS3Region,
 	}
 
 	// Show warning if gzip flag is passed

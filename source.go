@@ -15,6 +15,13 @@ type SourceConfig struct {
 	Type            ImageSourceType
 	AllowedOrigings []*url.URL
 	MaxAllowedSize  int
+
+	EnableS3    bool
+	S3AccessKey string
+	S3Secret    string
+	S3Bucket    string
+	S3Region    string
+	S3Path      string
 }
 
 var imageSourceMap = make(map[ImageSourceType]ImageSource)
@@ -38,6 +45,12 @@ func LoadSources(o ServerOptions) {
 			Authorization:   o.Authorization,
 			AllowedOrigings: o.AlloweOrigins,
 			MaxAllowedSize:  o.MaxAllowedSize,
+			EnableS3:        o.EnableS3,
+			S3AccessKey:     o.S3AccessKey,
+			S3Secret:        o.S3Secret,
+			S3Bucket:        o.S3Bucket,
+			S3Region:        o.S3Region,
+			S3Path:          o.S3Path,
 		})
 	}
 }

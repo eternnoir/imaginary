@@ -34,6 +34,13 @@ type ServerOptions struct {
 	PlaceholderImage  []byte
 	Endpoints         Endpoints
 	AlloweOrigins     []*url.URL
+
+	EnableS3    bool
+	S3AccessKey string
+	S3Secret    string
+	S3Bucket    string
+	S3Region    string
+	S3Path      string
 }
 
 // Endpoints represents a list of endpoint names to disable.
